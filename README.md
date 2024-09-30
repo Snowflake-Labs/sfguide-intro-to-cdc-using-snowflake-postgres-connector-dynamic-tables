@@ -1,0 +1,1 @@
+# sfguide-intro-to-cdc-using-snowflake-postgres-connector-dynamic-tables
