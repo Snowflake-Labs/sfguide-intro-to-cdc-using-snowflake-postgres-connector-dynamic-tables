@@ -4,7 +4,7 @@ services:
     image: "postgres:11"
     container_name: "postgres11"
     environment:
-      POSTGRES_DB: 'financial_data_hub'
+      POSTGRES_DB: 'postgres'
       POSTGRES_USER: 'postgres'
       POSTGRES_PASSWORD: 'postgres'
     ports:

@@ -1,12 +1,12 @@
 CREATE SCHEMA raw_cdc;
 SET search_path TO raw_cdc;
 
-drop table if exists financial_data_hub.raw_cdc.customers;
-drop table if exists financial_data_hub.raw_cdc.merchants;
-drop table if exists financial_data_hub.raw_cdc.products;
-drop table if exists financial_data_hub.raw_cdc.transactions;
+drop table if exists postgres.raw_cdc.customers;
+drop table if exists postgres.raw_cdc.merchants;
+drop table if exists postgres.raw_cdc.products;
+drop table if exists postgres.raw_cdc.transactions;
 
-CREATE TABLE financial_data_hub.raw_cdc.customers (
+CREATE TABLE postgres.raw_cdc.customers (
     customer_id integer PRIMARY KEY,
     firstname varchar,
     lastname varchar,
@@ -15,20 +15,20 @@ CREATE TABLE financial_data_hub.raw_cdc.customers (
     phone_number varchar
 );
 
-create table financial_data_hub.raw_cdc.merchants (
+create table postgres.raw_cdc.merchants (
     merchant_id integer PRIMARY KEY,
 	merchant_name varchar,
 	merchant_category varchar
 );
 
-create table financial_data_hub.raw_cdc.products (
+create table postgres.raw_cdc.products (
     product_id integer PRIMARY KEY,
     product_name varchar,
     product_category varchar,
     price double precision
 );
 
-create table financial_data_hub.raw_cdc.transactions (
+create table postgres.raw_cdc.transactions (
     transaction_id varchar PRIMARY KEY,
 	customer_id integer,
 	product_id integer,
@@ -41,19 +41,19 @@ create table financial_data_hub.raw_cdc.transactions (
     transaction_category varchar
 );
 
-copy financial_data_hub.raw_cdc.customers from '/tmp/customers.csv' DELIMITER ',' CSV HEADER;
-copy financial_data_hub.raw_cdc.merchants from '/tmp/merchants.csv' DELIMITER ',' CSV HEADER;
-copy financial_data_hub.raw_cdc.products from '/tmp/products.csv' DELIMITER ',' CSV HEADER;
-copy financial_data_hub.raw_cdc.transactions from '/tmp/transactions.csv' DELIMITER ',' CSV HEADER;
+copy postgres.raw_cdc.customers from '/tmp/customers.csv' DELIMITER ',' CSV HEADER;
+copy postgres.raw_cdc.merchants from '/tmp/merchants.csv' DELIMITER ',' CSV HEADER;
+copy postgres.raw_cdc.products from '/tmp/products.csv' DELIMITER ',' CSV HEADER;
+copy postgres.raw_cdc.transactions from '/tmp/transactions.csv' DELIMITER ',' CSV HEADER;
 
 
 -- The publication is required to start the replication progress as the Connector is based on PostgreSQL Logical Replication
 CREATE PUBLICATION agent_postgres_publication FOR ALL TABLES;
 
-select * from financial_data_hub.raw_cdc.customers;
-select * from financial_data_hub.raw_cdc.merchants;
-select * from financial_data_hub.raw_cdc.products;
-select * from financial_data_hub.raw_cdc.transactions;
+select * from postgres.raw_cdc.customers;
+select * from postgres.raw_cdc.merchants;
+select * from postgres.raw_cdc.products;
+select * from postgres.raw_cdc.transactions;
 
 CREATE OR REPLACE PROCEDURE insert_transactions()
 LANGUAGE plpgsql
@@ -79,17 +79,17 @@ BEGIN
         FOR j IN 1..100 LOOP
             -- Select random valid customer, product, and merchant from existing tables
             SELECT * INTO v_existing_customer
-            FROM financial_data_hub.raw_cdc.customers
+            FROM postgres.raw_cdc.customers
             ORDER BY RANDOM()
             LIMIT 1;
 
             SELECT * INTO v_existing_product
-            FROM financial_data_hub.raw_cdc.products
+            FROM postgres.raw_cdc.products
             ORDER BY RANDOM()
             LIMIT 1;
 
             SELECT * INTO v_existing_merchant
-            FROM financial_data_hub.raw_cdc.merchants
+            FROM postgres.raw_cdc.merchants
             ORDER BY RANDOM()
             LIMIT 1;
 
@@ -112,7 +112,7 @@ BEGIN
             v_transaction_category := CASE WHEN RANDOM() < 0.8 THEN 'Purchase' ELSE 'Refund' END;
 
             -- Insert new transaction into the transactions table
-            INSERT INTO financial_data_hub.raw_cdc.transactions (
+            INSERT INTO postgres.raw_cdc.transactions (
                 transaction_id, customer_id, product_id, merchant_id, transaction_date, transaction_time, quantity, total_price, transaction_card, transaction_category
             )
             VALUES (
