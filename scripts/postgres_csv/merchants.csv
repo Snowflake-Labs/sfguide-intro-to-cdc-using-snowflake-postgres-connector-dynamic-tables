@@ -1,0 +1,15 @@
+MERCHANT_ID,MERCHANT_NAME,MERCHANT_CATEGORY
+13,Amazon,Retail
+3,Walmart,Retail
+55,Apple,Tech
+56,Microsoft,Tech
+33,Whole Foods,Produce
+64,Trader Joe's,Produce
+40,Starbucks,Food
+35,McDonald's,Food
+34,Nike,Fashion
+42,Adidas,Fashion
+24,Walgreens,Pharmacy
+16,CVS,Pharmacy
+61,Netflix,Entertainment
+65,Spotify,Entertainment
