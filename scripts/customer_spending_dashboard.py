@@ -9,27 +9,7 @@ st.set_page_config(layout="wide", initial_sidebar_state="expanded")
 session = get_active_session()
 
 def load_data():
-    query = """
-    SELECT
-        customer_id,
-        customer_age,
-        product_id,
-        product_name,
-        product_category,
-        merchant_id,
-        merchant_name,
-        merchant_category,
-        transaction_date,
-        transaction_time,
-        quantity,
-        total_price,
-        transaction_card,
-        transaction_category,
-        transaction_id
-    FROM
-        cdc_prod.analytics.customer_purchase_summary
-    """
-    return session.sql(query)
+    return session.sql("select * from cdc_prod.analytics.customer_purchase_summary")
 
 
 # add empty space in the streamlit app
