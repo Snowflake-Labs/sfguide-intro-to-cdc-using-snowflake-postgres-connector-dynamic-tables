@@ -27,7 +27,7 @@ def load_data():
         transaction_category,
         transaction_id
     FROM
-        CONNECTORS_DEST_DB."raw_cdc"."customer_purchase_summary"
+        cdc_prod.analytics.customer_purchase_summary
     """
     return session.sql(query)
 
