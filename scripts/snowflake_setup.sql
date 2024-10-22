@@ -21,7 +21,7 @@ CREATE OR REPLACE WAREHOUSE cdc_ds_wh
     AUTO_SUSPEND = 60
     AUTO_RESUME = TRUE
     INITIALLY_SUSPENDED = TRUE
-COMMENT = 'data science warehouse for cdc';
+    COMMENT = 'data science warehouse for cdc';
 
 -- Use our Warehouse
 USE WAREHOUSE cdc_ds_wh;

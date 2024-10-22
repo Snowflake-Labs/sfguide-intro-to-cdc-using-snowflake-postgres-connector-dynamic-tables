@@ -97,7 +97,6 @@ BEGIN
             v_new_transaction_id := 'TX' || EXTRACT(EPOCH FROM NOW())::TEXT || j::TEXT;
 
             -- Generate current date and time
---             v_transaction_date := CURRENT_DATE;
             v_transaction_date := CURRENT_DATE;
             v_transaction_time := TO_CHAR(NOW(), 'HH24:MI:SS');
 
