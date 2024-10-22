@@ -1,4 +1,4 @@
-# Real-Time Financial Insights Using CDC with Dynamic Tables, Streamlit, and PostgreSQL
+# Real-Time Financial Insights Using CDC with the Snowflake Connector for PostgreSQL and Dynamic Tables
 
 ## Overview
 In this Quickstart, we will investigate how a financial company gains insights on their customer transaction data in PostgreSQL using the Snowflake Connector for PostgreSQL, Dynamic Tables, and Streamlit.
