@@ -76,7 +76,7 @@ DECLARE
 BEGIN
     -- Loop for 30 minutes (inserting 1000 records every minute)
     FOR i IN 1..30 LOOP
-        FOR j IN 1..100 LOOP
+        FOR j IN 1..1000 LOOP
             -- Select random valid customer, product, and merchant from existing tables
             SELECT * INTO v_existing_customer
             FROM postgres.raw_cdc.customers
@@ -96,9 +96,9 @@ BEGIN
             -- Generate new transaction ID (unique)
             v_new_transaction_id := 'TX' || EXTRACT(EPOCH FROM NOW())::TEXT || j::TEXT;
 
-            -- Generate current date and time
-            v_transaction_date := CURRENT_DATE;
-            v_transaction_time := TO_CHAR(NOW(), 'HH24:MI:SS');
+            -- Generate current date and time in New York time zone
+            v_transaction_date := (CURRENT_TIMESTAMP AT TIME ZONE 'America/New_York')::DATE;
+            v_transaction_time := TO_CHAR(CURRENT_TIMESTAMP AT TIME ZONE 'America/New_York', 'HH24:MI:SS');
 
             -- Generate random quantity between 1 and 7
             v_quantity := FLOOR(RANDOM() * 7 + 1);
