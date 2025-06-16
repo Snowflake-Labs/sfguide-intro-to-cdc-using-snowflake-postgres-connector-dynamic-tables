@@ -1,0 +1,9 @@
+{
+  "PSQLDS1": {
+    "url": "jdbc:postgresql://host.docker.internal:5432/postgres",
+    "username": "postgres",
+    "password": "postgres",
+    "publication": "agent_postgres_publication",
+    "ssl": false
+  }
+}
